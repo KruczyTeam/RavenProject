@@ -1,5 +1,6 @@
 package com.kruczyteam.raven.LoginService;
 
+
 public class User implements IUser
 {
 	@Override
