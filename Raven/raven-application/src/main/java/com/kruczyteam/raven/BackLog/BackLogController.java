@@ -7,20 +7,38 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/api/v1")
-public class BackLogController
+public class BacklogController
 {
     @Autowired
-    private BackLogService backLogService;
+    private BackLogService backlogService;
 
     @RequestMapping(value = "/backlogs/")
-    public List<BackLog> getAllBackLogs()
+    public List<Backlog> getAllBacklogs()
     {
-        return backLogService.getAllBackLogs();
+        return backlogService.getAllBacklogs();
     }
 
     @RequestMapping(value = "/backlogs/", method = RequestMethod.POST)
-    public void addBackLog(@RequestBody BackLog backLog)
+    public void addBacklog(@RequestBody Backlog backlog)
     {
-        backLogService.addBackLog(backLog);
+        backlogService.addBacklog(backlog);
+    }
+
+    @RequestMapping(value = "/backlogs/{id}", method = RequestMethod.DELETE)
+    public void deleteBacklog(@PathVariable Long id)
+    {
+        backlogService.removeBacklog(id);
+    }
+
+    @RequestMapping(value = "/backlogs/{id}", method = RequestMethod.PUT)
+    public void updateBacklog(@PathVariable Long id,@RequestBody Backlog backlog)
+    {
+        backlogService.updateBacklog(id,backlog);
+    }
+
+    @RequestMapping(value = "/backlogs/{id}", method = RequestMethod.GET)
+    public Backlog getBacklog(@PathVariable Long id)
+    {
+        return backlogService.getBacklog(id);
     }
 }

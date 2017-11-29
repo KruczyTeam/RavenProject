@@ -4,6 +4,9 @@ import java.util.List;
 
 public interface IBackLogService
 {
-    List<BackLog> getAllBackLogs();
-    void addBackLog(BackLog backLog);
+    List<Backlog> getAllBacklogs();
+    void addBacklog(Backlog backlog);
+    Backlog getBacklog(long id);
+    void removeBacklog(long id);
+    void updateBacklog(long id, Backlog backlog);
 }

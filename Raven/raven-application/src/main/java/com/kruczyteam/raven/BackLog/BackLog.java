@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "tbl_backlogs")
-public class BackLog
+public class Backlog
 {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

@@ -13,18 +13,34 @@ public class BackLogService implements IBackLogService
     private IBackLogRepository backLogRepository;
 
     @Override
-    public List<BackLog> getAllBackLogs()
+    public List<Backlog> getAllBacklogs()
     {
-        List<BackLog> backLogs = new ArrayList();
+        List<Backlog> backlogs = new ArrayList();
 
-        backLogRepository.findAll().forEach(backLogs::add);
+        backLogRepository.findAll().forEach(backlogs::add);
 
-        return backLogs;
+        return backlogs;
     }
 
     @Override
-    public void addBackLog(BackLog backLog)
+    public void addBacklog(Backlog backlog)
     {
-        backLogRepository.save(backLog);
+        backLogRepository.save(backlog);
+    }
+
+    @Override
+    public Backlog getBacklog(long id) {
+        return backLogRepository.findOne(id);
+    }
+
+    @Override
+    public void removeBacklog(long id) {
+        backLogRepository.delete(id);
+    }
+
+    @Override
+    public void updateBacklog(long id, Backlog backlog) {
+        backlog.setId(id);
+        backLogRepository.save(backlog);
     }
 }
