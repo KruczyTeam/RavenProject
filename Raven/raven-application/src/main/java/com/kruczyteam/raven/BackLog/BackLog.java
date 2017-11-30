@@ -5,16 +5,16 @@ import org.hibernate.validator.constraints.NotEmpty;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "tbl_backlogs")
+@Table(name = "tbl_backlog")
 public class Backlog
 {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "backlogs_id")
+    @Column(name = "backlog_id")
     private Long id;
 
     @NotEmpty
-    @Column(name = "backlogs_name")
+    @Column(name = "backlog_name")
     private String name;
 
     public Long getId() {
