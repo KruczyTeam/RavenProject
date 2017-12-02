@@ -18,6 +18,10 @@ public class UserStories {
     @JoinColumn(name="backlog_id")
     private Backlog fBacklog;
 
+	@NotEmpty
+	@Column(name = "userStoriesDescription")
+	private String description;
+
     public Long getUserStoriesId() {
         return userStoriesId;
     }
@@ -33,4 +37,13 @@ public class UserStories {
     public void setfBacklog(Backlog f_backlog) {
         this.fBacklog = f_backlog;
     }
+
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
 }

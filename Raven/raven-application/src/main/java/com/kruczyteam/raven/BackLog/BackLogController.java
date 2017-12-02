@@ -24,6 +24,12 @@ public class BacklogController
         backlogService.addBacklog(backlog);
     }
 
+    @RequestMapping(value = "/backlogs/{id}", method = RequestMethod.GET)
+    public Backlog getBacklog(@PathVariable Long id)
+    {
+        return backlogService.getBacklog(id);
+    }
+
     @RequestMapping(value = "/backlogs/{id}", method = RequestMethod.DELETE)
     public void deleteBacklog(@PathVariable Long id)
     {
@@ -36,10 +42,6 @@ public class BacklogController
         backlogService.updateBacklog(id,backlog);
     }
 
-    @RequestMapping(value = "/backlogs/{id}", method = RequestMethod.GET)
-    public Backlog getBacklog(@PathVariable Long id)
-    {
-        return backlogService.getBacklog(id);
-    }
+
 
 }

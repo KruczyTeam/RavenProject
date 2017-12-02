@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface IUserStoriesRepository extends CrudRepository<UserStories,Long>{
     List<UserStories> findByfBacklog(Backlog fBacklogId);
+    UserStories findByfBacklogAndUserStoriesId(Backlog fBacklogId,Long userStoriesId);
 }

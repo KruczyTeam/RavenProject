@@ -14,7 +14,14 @@ public class UserStoriesService implements IUserStoriesService {
 
     @Override
     public List<UserStories> getAllUserStories(Backlog backlog){
-       return userStoriesRepository.findByfBacklog(backlog);
+        List<UserStories> userStories = userStoriesRepository.findByfBacklog(backlog);
+
+        for(UserStories userStory: userStories)
+        {
+            userStory.setfBacklog(null);
+        }
+
+       return userStories;
     }
 
     @Override
@@ -22,4 +29,51 @@ public class UserStoriesService implements IUserStoriesService {
         userStories.setfBacklog(backlog);
         userStoriesRepository.save(userStories);
     }
+
+    @Override
+    public UserStories getUserStories(Backlog backlog, Long idUserStory) throws UserStoriesNotFoundException {
+        try {
+            UserStories story = userStoriesRepository.findByfBacklogAndUserStoriesId(backlog, idUserStory);
+            story.setfBacklog(null);
+            return story;
+        }
+        catch(Exception e)
+        {
+            throw new UserStoriesNotFoundException();
+        }
+    }
+
+    @Override
+    public void updateUserStories(Backlog backlog, Long idUserStory, UserStories userStories) throws UserStoriesNotFoundException {
+        try {
+            UserStories story = userStoriesRepository.findByfBacklogAndUserStoriesId(backlog, idUserStory);
+            if(story!=null) {
+                userStories.setUserStoriesId(idUserStory);
+                userStories.setfBacklog(backlog);
+                userStoriesRepository.save(userStories);
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
+        catch(Exception e)
+        {
+            throw new UserStoriesNotFoundException();
+        }
+    }
+
+    @Override
+    public void deleteUserStories(Backlog backlog, Long idUserStory) throws UserStoriesNotFoundException {
+
+        try {
+            UserStories story = userStoriesRepository.findByfBacklogAndUserStoriesId(backlog, idUserStory);
+            userStoriesRepository.delete(story);
+        }
+        catch(Exception e)
+        {
+            throw new UserStoriesNotFoundException();
+        }
+    }
+
 }

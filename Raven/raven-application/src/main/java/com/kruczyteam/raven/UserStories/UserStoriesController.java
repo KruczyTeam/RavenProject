@@ -15,19 +15,39 @@ public class UserStoriesController {
     UserStoriesService userStoriesService;
 
     @Autowired
-    BackLogService backLogService;
+    BackLogService backlogService;
 
     @RequestMapping(value = "/backlogs/{id}/UserStories/", method = RequestMethod.GET)
     public List<UserStories> getUserStories(@PathVariable Long id)
     {
-        Backlog backlog = backLogService.getBacklog(id);
+        Backlog backlog = backlogService.getBacklog(id);
         return userStoriesService.getAllUserStories(backlog);
     }
 
     @RequestMapping(value = "/backlogs/{id}/UserStories/", method = RequestMethod.POST)
     public void addtUserStories(@PathVariable Long id, @RequestBody UserStories userStories)
     {
-        Backlog backlog = backLogService.getBacklog(id);
+        Backlog backlog = backlogService.getBacklog(id);
         userStoriesService.addUserStories(backlog,userStories);
+    }
+
+    @RequestMapping(value = "/backlogs/{id}/UserStories/{idUserStory}", method = RequestMethod.GET)
+    public UserStories getUserStory(@PathVariable Long id,@PathVariable Long idUserStory) throws UserStoriesNotFoundException {
+	    Backlog backlog = backlogService.getBacklog(id);
+
+		    return userStoriesService.getUserStories(backlog,idUserStory);
+
+    }
+
+    @RequestMapping(value = "/backlogs/{id}/UserStories/{idUserStory}", method = RequestMethod.DELETE)
+    public void deleteUserStories(@PathVariable Long id,@PathVariable Long idUserStory) throws UserStoriesNotFoundException {
+	    Backlog backlog = backlogService.getBacklog(id);
+	    userStoriesService.deleteUserStories(backlog,idUserStory);
+    }
+
+    @RequestMapping(value = "/backlogs/{id}/UserStories/{idUserStory}", method = RequestMethod.PUT)
+    public void updateUserStories(@PathVariable Long id,@PathVariable Long idUserStory,@RequestBody UserStories userStories) throws UserStoriesNotFoundException {
+	    Backlog backlog = backlogService.getBacklog(id);
+        userStoriesService.updateUserStories(backlog,idUserStory,userStories);
     }
 }
