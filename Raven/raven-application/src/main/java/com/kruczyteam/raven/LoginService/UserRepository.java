@@ -1,0 +1,6 @@
+package com.kruczyteam.raven.LoginService;
+
+import org.springframework.data.repository.CrudRepository;
+
+public interface UserRepository //extends CrudRepository<User,String>
+{}
