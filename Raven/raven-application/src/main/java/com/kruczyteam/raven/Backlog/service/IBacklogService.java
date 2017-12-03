@@ -1,8 +1,10 @@
-package com.kruczyteam.raven.BackLog;
+package com.kruczyteam.raven.Backlog.service;
+
+import com.kruczyteam.raven.Backlog.model.Backlog;
 
 import java.util.List;
 
-public interface IBackLogService
+public interface IBacklogService
 {
     List<Backlog> getAllBacklogs();
     void addBacklog(Backlog backlog);

@@ -1,21 +1,30 @@
-package com.kruczyteam.raven.BackLog;
+package com.kruczyteam.raven.Backlog.model;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name = "tbl_backlog")
+@Table(name = "backlogs")
 public class Backlog
 {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "backlog_id")
+    @Column(name = "id")
     private Long id;
 
     @NotEmpty
-    @Column(name = "backlog_name")
+    @Column(name = "name")
     private String name;
+
+    public Backlog()
+    {
+    }
+
+    public Backlog(String name)
+    {
+        this.name = name;
+    }
 
     public Long getId() {
         return id;
