@@ -3,6 +3,7 @@ package com.kruczyteam.raven.Backlog.controller;
 import com.kruczyteam.raven.Backlog.service.BacklogService;
 import com.kruczyteam.raven.Backlog.model.Backlog;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -32,6 +33,7 @@ public class BacklogController
         backlogService.addBacklog(backlog);
     }
 
+    @Cacheable("backlogs")
     @RequestMapping(value = "/backlogs/{id}", method = RequestMethod.GET)
     public Backlog getBacklog(@PathVariable Long id)
     {
