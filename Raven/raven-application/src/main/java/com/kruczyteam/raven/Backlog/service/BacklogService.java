@@ -11,41 +11,41 @@ import java.util.List;
 @Service
 public class BacklogService implements IBacklogService
 {
-    private IBacklogRepository backlogRepository;
+    private IBacklogRepository iBacklogRepository;
 
     @Autowired
-    public BacklogService(IBacklogRepository backlogRepository)
+    public BacklogService(IBacklogRepository iBacklogRepository)
     {
-        this.backlogRepository = backlogRepository;
+        this.iBacklogRepository = iBacklogRepository;
     }
 
     public List<Backlog> getAllBacklogs()
     {
         List<Backlog> backlogs = new ArrayList();
 
-        backlogRepository.findAll().forEach(backlogs::add);
+        iBacklogRepository.findAll().forEach(backlogs::add);
 
         return backlogs;
     }
 
     public void addBacklog(Backlog backlog)
     {
-        backlogRepository.save(backlog);
+        iBacklogRepository.save(backlog);
     }
 
     public Backlog getBacklog(long id)
     {
-        return backlogRepository.findOne(id);
+        return iBacklogRepository.findOne(id);
     }
 
     public void removeBacklog(long id)
     {
-        backlogRepository.delete(id);
+        iBacklogRepository.delete(id);
     }
 
     public void updateBacklog(long id, Backlog backlog)
     {
         backlog.setId(id);
-        backlogRepository.save(backlog);
+        iBacklogRepository.save(backlog);
     }
 }

@@ -10,7 +10,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/api/v1")
+@RequestMapping(value = "/api/v1/backlogs")
 public class BacklogController
 {
     private BacklogService backlogService;
@@ -21,32 +21,32 @@ public class BacklogController
         this.backlogService = backlogService;
     }
 
-    @RequestMapping(value = "/backlogs/")
+    @RequestMapping(value = "/")
     public List<Backlog> getAllBacklogs()
     {
         return backlogService.getAllBacklogs();
     }
 
-    @RequestMapping(value = "/backlogs/", method = RequestMethod.POST)
+    @RequestMapping(value = "/", method = RequestMethod.POST)
     public void addBacklog(@Valid @RequestBody Backlog backlog)
     {
         backlogService.addBacklog(backlog);
     }
 
     @Cacheable("backlogs")
-    @RequestMapping(value = "/backlogs/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public Backlog getBacklog(@PathVariable Long id)
     {
         return backlogService.getBacklog(id);
     }
 
-    @RequestMapping(value = "/backlogs/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public void deleteBacklog(@PathVariable Long id)
     {
         backlogService.removeBacklog(id);
     }
 
-    @RequestMapping(value = "/backlogs/{id}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public void updateBacklog(@PathVariable Long id, @Valid @RequestBody Backlog backlog)
     {
         backlogService.updateBacklog(id,backlog);
