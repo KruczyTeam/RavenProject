@@ -1,16 +1,16 @@
-package com.kruczyteam.raven.UserStories.controller;
+package com.kruczyteam.raven.UserStory.controller;
 
-import com.kruczyteam.raven.UserStories.exception.UserStoriesNotFoundException;
+import com.kruczyteam.raven.UserStory.exception.UserStoryNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ControllerAdvice
-public class UserStoriesControllerExceptionHandler
+public class UserStoryControllerExceptionHandler
 {
 	@ResponseStatus(HttpStatus.NOT_FOUND)
-	@ExceptionHandler(UserStoriesNotFoundException.class)
+	@ExceptionHandler(UserStoryNotFoundException.class)
 	public void handleConflict()
     {
 

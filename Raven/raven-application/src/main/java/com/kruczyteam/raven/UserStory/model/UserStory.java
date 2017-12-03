@@ -1,4 +1,4 @@
-package com.kruczyteam.raven.UserStories.model;
+package com.kruczyteam.raven.UserStory.model;
 
 import com.kruczyteam.raven.Backlog.model.Backlog;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -7,7 +7,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "user_stories")
-public class UserStories
+public class UserStory
 {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -22,11 +22,11 @@ public class UserStories
     @JoinColumn(name = "backlog_id")
     private Backlog backlog;
 
-    public UserStories()
+    public UserStory()
     {
     }
 
-    public UserStories(String description, Backlog backlog)
+    public UserStory(String description, Backlog backlog)
     {
         this.description = description;
         this.backlog = backlog;
