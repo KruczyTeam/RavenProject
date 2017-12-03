@@ -25,13 +25,13 @@ public class UserStoryController
         this.backlogService = backlogService;
     }
 
-    @RequestMapping(value = "/backlogs/{id}/userstory/", method = RequestMethod.GET)
+    @RequestMapping(value = "/backlogs/{id}/userstories/", method = RequestMethod.GET)
     public List<UserStory> getUserStories(@PathVariable Long id)
     {
         return userStoryService.getUserStoriesByBacklogId(id);
     }
 
-    @RequestMapping(value = "/backlogs/{id}/userstory/", method = RequestMethod.POST)
+    @RequestMapping(value = "/backlogs/{id}/userstories/", method = RequestMethod.POST)
     public void addUserStory(@PathVariable Long id, @Valid @RequestBody UserStory userStory)
     {
         Backlog backlog = backlogService.getBacklog(id);
@@ -40,19 +40,19 @@ public class UserStoryController
 
     // Moze tak bedzie lepiej?
 
-    @RequestMapping(value = "/userstory/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/userstories/{id}", method = RequestMethod.GET)
     public UserStory getUserStory(@PathVariable Long id) throws UserStoryNotFoundException
     {
         return userStoryService.getUserStory(id);
     }
 
-    @RequestMapping(value = "/userstory/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/userstories/{id}", method = RequestMethod.DELETE)
     public void deleteUserStory(@PathVariable Long id) throws UserStoryNotFoundException
     {
         userStoryService.deleteUserStory(id);
     }
 
-    @RequestMapping(value = "/userstory/{id}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/userstories/{id}", method = RequestMethod.PUT)
     public void updateUserStory(@PathVariable Long id, @Valid @RequestBody UserStory userStory) throws UserStoryNotFoundException
     {
         userStoryService.updateUserStory(id, userStory);

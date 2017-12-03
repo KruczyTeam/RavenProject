@@ -12,25 +12,25 @@ import java.util.List;
 @Service
 public class UserStoryService implements IUserStoryService
 {
-    private IUserStoryRepository userStoryRepository;
+    private IUserStoryRepository iUserStoryRepository;
 
     @Autowired
-    public UserStoryService(IUserStoryRepository userStoryRepository)
+    public UserStoryService(IUserStoryRepository iUserStoryRepository)
     {
-        this.userStoryRepository = userStoryRepository;
+        this.iUserStoryRepository = iUserStoryRepository;
     }
 
     @Override
     public List<UserStory> getUserStoriesByBacklogId(Long backlogId)
     {
-       return userStoryRepository.findByBacklogId(backlogId);
+       return iUserStoryRepository.findByBacklogId(backlogId);
     }
 
     @Override
     public void addUserStory(UserStory userStory, Backlog backlog)
     {
         userStory.setBacklog(backlog);
-        userStoryRepository.save(userStory);
+        iUserStoryRepository.save(userStory);
     }
 
     @Override
@@ -38,7 +38,7 @@ public class UserStoryService implements IUserStoryService
     {
         try
         {
-            return userStoryRepository.findOne(id);
+            return iUserStoryRepository.findOne(id);
         }
         catch(Exception e)
         {
@@ -51,9 +51,9 @@ public class UserStoryService implements IUserStoryService
     {
         try
         {
-            if(userStoryRepository.exists(id))
+            if(iUserStoryRepository.exists(id))
             {
-                userStoryRepository.delete(id);
+                iUserStoryRepository.delete(id);
             }
             else
             {
@@ -71,9 +71,9 @@ public class UserStoryService implements IUserStoryService
     {
         try
         {
-            if(userStoryRepository.exists(id))
+            if(iUserStoryRepository.exists(id))
             {
-                userStoryRepository.save(userStory);
+                iUserStoryRepository.save(userStory);
             }
             else
             {
