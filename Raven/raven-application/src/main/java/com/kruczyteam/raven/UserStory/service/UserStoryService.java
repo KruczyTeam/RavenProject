@@ -27,52 +27,34 @@ public class UserStoryService implements IUserStoryService
     }
 
     @Override
-    public void addUserStory(UserStory userStory, Backlog backlog)
+    public UserStory getUserStoryByBacklogIdAndUserStoryId(Long backlogId, Long userStoryId) throws UserStoryNotFoundException
     {
-        userStory.setBacklog(backlog);
+        try
+        {
+            return iUserStoryRepository.findOneByBacklogIdAndId(backlogId, userStoryId);
+        }
+        catch(Exception e)
+        {
+            throw new UserStoryNotFoundException();
+        }
+    }
+
+    @Override
+    public void addUserStory(UserStory userStory)
+    {
         iUserStoryRepository.save(userStory);
     }
 
     @Override
-    public UserStory getUserStory(Long id) throws UserStoryNotFoundException
+    public void updateUserStory(Backlog backlog, Long userStoryId, UserStory userStory) throws UserStoryNotFoundException
     {
         try
         {
-            return iUserStoryRepository.findOne(id);
-        }
-        catch(Exception e)
-        {
-            throw new UserStoryNotFoundException();
-        }
-    }
+            if(getUserStoryByBacklogIdAndUserStoryId(backlog.getId(), userStoryId) != null)
+            {
+                userStory.setBacklog(backlog);
+                userStory.setId(userStoryId);
 
-    @Override
-    public void deleteUserStory(Long id) throws UserStoryNotFoundException
-    {
-        try
-        {
-            if(iUserStoryRepository.exists(id))
-            {
-                iUserStoryRepository.delete(id);
-            }
-            else
-            {
-                throw new Exception();
-            }
-        }
-        catch(Exception e)
-        {
-            throw new UserStoryNotFoundException();
-        }
-    }
-
-    @Override
-    public void updateUserStory(Long id, UserStory userStory) throws UserStoryNotFoundException
-    {
-        try
-        {
-            if(iUserStoryRepository.exists(id))
-            {
                 iUserStoryRepository.save(userStory);
             }
             else
@@ -80,57 +62,24 @@ public class UserStoryService implements IUserStoryService
                 throw new Exception();
             }
         }
-        catch(Exception e)
+        catch (Exception e)
         {
             throw new UserStoryNotFoundException();
         }
     }
 
-    //    @Override
-//    public UserStory getUserStory(Backlog backlog, Long userStoryId) throws UserStoryNotFoundException
-//    {
-//        try
-//        {
-//            return userStoryRepository.findByBacklogAndId(backlog, userStoryId);
-//        }
-//        catch(Exception e)
-//        {
-//            throw new UserStoryNotFoundException();
-//        }
-//    }
+    @Override
+    public void deleteUserStory(Long backlogId, Long userStoryId) throws UserStoryNotFoundException
+    {
+        try
+        {
+            UserStory userStory = getUserStoryByBacklogIdAndUserStoryId(backlogId, userStoryId);
 
-//    @Override
-//    public void updateUserStory(Backlog backlog, Long idUserStory, UserStory userStory) throws UserStoryNotFoundException
-//    {
-//        try {
-//            UserStory story = userStoryRepository.findByfBacklogAndUserStoryId(backlog, idUserStory);
-//            if(story!=null) {
-//                userStory.setId(idUserStory);
-//                userStory.setfBacklogId(backlog);
-//                userStoryRepository.save(userStory);
-//            }
-//            else
-//            {
-//                throw new Exception();
-//            }
-//        }
-//        catch(Exception e)
-//        {
-//            throw new UserStoryNotFoundException();
-//        }
-//    }
-//
-//    @Override
-//    public void deleteUserStory(Backlog backlog, Long idUserStory) throws UserStoryNotFoundException {
-//
-//        try {
-//            UserStory story = userStoryRepository.findByfBacklogAndUserStoryId(backlog, idUserStory);
-//            userStoryRepository.delete(story);
-//        }
-//        catch(Exception e)
-//        {
-//            throw new UserStoryNotFoundException();
-//        }
-//    }
-
+            iUserStoryRepository.delete(userStory);
+        }
+        catch(Exception e)
+        {
+            throw new UserStoryNotFoundException();
+        }
+    }
 }

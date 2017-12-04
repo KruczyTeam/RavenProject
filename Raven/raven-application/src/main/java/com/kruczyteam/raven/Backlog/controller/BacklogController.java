@@ -21,34 +21,34 @@ public class BacklogController
         this.backlogService = backlogService;
     }
 
-    @RequestMapping(value = "/")
+    @GetMapping(value = "/")
     public List<Backlog> getAllBacklogs()
     {
         return backlogService.getAllBacklogs();
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.POST)
+    @PostMapping(value = "/")
     public void addBacklog(@Valid @RequestBody Backlog backlog)
     {
         backlogService.addBacklog(backlog);
     }
 
     @Cacheable("backlogs")
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public Backlog getBacklog(@PathVariable Long id)
+    @GetMapping(value = "/{backlogId}")
+    public Backlog getBacklog(@PathVariable Long backlogId)
     {
-        return backlogService.getBacklog(id);
+        return backlogService.getBacklog(backlogId);
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public void deleteBacklog(@PathVariable Long id)
+    @DeleteMapping(value = "/{backlogId}")
+    public void deleteBacklog(@PathVariable Long backlogId)
     {
-        backlogService.removeBacklog(id);
+        backlogService.removeBacklog(backlogId);
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public void updateBacklog(@PathVariable Long id, @Valid @RequestBody Backlog backlog)
+    @PutMapping(value = "/{backlogId}")
+    public void updateBacklog(@PathVariable Long backlogId, @Valid @RequestBody Backlog backlog)
     {
-        backlogService.updateBacklog(id,backlog);
+        backlogService.updateBacklog(backlogId, backlog);
     }
 }

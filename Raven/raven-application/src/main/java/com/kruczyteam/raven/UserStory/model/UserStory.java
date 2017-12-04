@@ -1,6 +1,7 @@
 package com.kruczyteam.raven.UserStory.model;
 
 import com.kruczyteam.raven.Backlog.model.Backlog;
+import com.kruczyteam.raven.ProgressState;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
@@ -17,6 +18,9 @@ public class UserStory
     @NotEmpty
     @Column(name = "description")
     private String description;
+
+    @Column(name = "progress_state")
+    private ProgressState progressState;
 
     @ManyToOne
     @JoinColumn(name = "backlog_id")
@@ -50,6 +54,16 @@ public class UserStory
     public void setDescription(String description)
     {
         this.description = description;
+    }
+
+    public ProgressState getProgressState()
+    {
+        return progressState;
+    }
+
+    public void setProgressState(ProgressState progressState)
+    {
+        this.progressState = progressState;
     }
 
     public Backlog getBacklog()

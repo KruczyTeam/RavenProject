@@ -1,4 +1,4 @@
-package com.kruczyteam.raven.Task;
+package com.kruczyteam.raven;
 
 public enum ProgressState
 {

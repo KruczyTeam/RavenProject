@@ -1,6 +1,6 @@
 package com.kruczyteam.raven.Task.service;
 
-import com.kruczyteam.raven.Task.ProgressState;
+import com.kruczyteam.raven.ProgressState;
 import com.kruczyteam.raven.Task.model.Task;
 import com.kruczyteam.raven.Task.repository.ITaskRepository;
 import com.kruczyteam.raven.UserStory.model.UserStory;
@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -32,7 +33,7 @@ public class TaskService implements ITaskService
     public void addTask(Task task, UserStory userStory)
     {
         task.setUserStory(userStory);
-        task.setCreationDate(Date.from(Instant.now()));
+        task.setCreationDate(LocalDateTime.from(Instant.now()));
         task.setProgressState(ProgressState.TODO);
 
         iTaskRepository.save(task);

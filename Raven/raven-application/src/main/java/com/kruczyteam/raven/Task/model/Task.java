@@ -1,11 +1,12 @@
 package com.kruczyteam.raven.Task.model;
 
-import com.kruczyteam.raven.Task.ProgressState;
+import com.kruczyteam.raven.ProgressState;
 import com.kruczyteam.raven.UserStory.model.UserStory;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -25,10 +26,9 @@ public class Task
     @Column(name = "author")
     private String author;
 
-    @DateTimeFormat()
-    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     @Column(name = "creation_date")
-    private Date creationDate;
+    private LocalDateTime creationDate;
 
     @Column(name = "current")
     private String current;
@@ -70,12 +70,12 @@ public class Task
         this.author = author;
     }
 
-    public Date getCreationDate()
+    public LocalDateTime getCreationDate()
     {
         return creationDate;
     }
 
-    public void setCreationDate(Date creationDate)
+    public void setCreationDate(LocalDateTime creationDate)
     {
         this.creationDate = creationDate;
     }

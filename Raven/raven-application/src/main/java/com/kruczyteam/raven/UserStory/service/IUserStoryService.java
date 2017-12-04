@@ -9,13 +9,9 @@ import java.util.List;
 public interface IUserStoryService
 {
     List<UserStory> getUserStoriesByBacklogId(Long backlogId);
-    void addUserStory(UserStory userStory, Backlog backlog);
+    UserStory getUserStoryByBacklogIdAndUserStoryId(Long backlogId, Long userStoryId) throws UserStoryNotFoundException;
 
-    UserStory getUserStory(Long id) throws UserStoryNotFoundException;
-    void deleteUserStory(Long id) throws UserStoryNotFoundException;
-    void updateUserStory(Long id, UserStory userStory) throws UserStoryNotFoundException;
-
-    // UserStory getUserStory(Backlog backlog, Long userStoryId) throws UserStoryNotFoundException;
-    // void updateUserStory(Backlog backlog, Long id, UserStory userStory) throws UserStoryNotFoundException;
-    // void deleteUserStory(Backlog backlog, Long id) throws UserStoryNotFoundException;
+    void addUserStory(UserStory userStory);
+    void updateUserStory(Backlog backlog, Long userStoryId, UserStory userStory) throws UserStoryNotFoundException;
+    void deleteUserStory(Long backlogId, Long userStoryId) throws UserStoryNotFoundException;
 }
