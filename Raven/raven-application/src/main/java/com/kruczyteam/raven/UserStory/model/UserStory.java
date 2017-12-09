@@ -23,17 +23,11 @@ public class UserStory
     private ProgressState progressState;
 
     @ManyToOne
-    @JoinColumn(name = "backlog_id")
+    @JoinColumn(name = "backlog_id", nullable = false)
     private Backlog backlog;
 
     public UserStory()
     {
-    }
-
-    public UserStory(String description, Backlog backlog)
-    {
-        this.description = description;
-        this.backlog = backlog;
     }
 
     public Long getId()

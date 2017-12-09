@@ -3,7 +3,6 @@ package com.kruczyteam.raven.Backlog.controller;
 import com.kruczyteam.raven.Backlog.service.BacklogService;
 import com.kruczyteam.raven.Backlog.model.Backlog;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -33,22 +32,21 @@ public class BacklogController
         backlogService.addBacklog(backlog);
     }
 
-    @Cacheable("backlogs")
     @GetMapping(value = "/{backlogId}")
     public Backlog getBacklog(@PathVariable Long backlogId)
     {
         return backlogService.getBacklog(backlogId);
     }
 
-    @DeleteMapping(value = "/{backlogId}")
-    public void deleteBacklog(@PathVariable Long backlogId)
-    {
-        backlogService.removeBacklog(backlogId);
-    }
-
     @PutMapping(value = "/{backlogId}")
     public void updateBacklog(@PathVariable Long backlogId, @Valid @RequestBody Backlog backlog)
     {
         backlogService.updateBacklog(backlogId, backlog);
+    }
+
+    @DeleteMapping(value = "/{backlogId}")
+    public void deleteBacklog(@PathVariable Long backlogId)
+    {
+        backlogService.removeBacklog(backlogId);
     }
 }

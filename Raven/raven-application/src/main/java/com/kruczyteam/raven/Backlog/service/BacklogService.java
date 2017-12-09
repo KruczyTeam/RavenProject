@@ -1,11 +1,12 @@
 package com.kruczyteam.raven.Backlog.service;
 
+import com.kruczyteam.raven.Backlog.exception.BacklogNotFoundException;
 import com.kruczyteam.raven.Backlog.model.Backlog;
 import com.kruczyteam.raven.Backlog.repository.IBacklogRepository;
+import org.assertj.core.util.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -21,11 +22,7 @@ public class BacklogService implements IBacklogService
 
     public List<Backlog> getAllBacklogs()
     {
-        List<Backlog> backlogs = new ArrayList();
-
-        iBacklogRepository.findAll().forEach(backlogs::add);
-
-        return backlogs;
+        return Lists.newArrayList(iBacklogRepository.findAll());
     }
 
     public void addBacklog(Backlog backlog)
@@ -33,19 +30,61 @@ public class BacklogService implements IBacklogService
         iBacklogRepository.save(backlog);
     }
 
-    public Backlog getBacklog(long id)
+    public Backlog getBacklog(Long id)
     {
-        return iBacklogRepository.findOne(id);
+        try
+        {
+            if(iBacklogRepository.findOne(id) != null)
+            {
+                return iBacklogRepository.findOne(id);
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
+        catch(Exception e)
+        {
+            throw new BacklogNotFoundException(id);
+        }
     }
 
-    public void removeBacklog(long id)
+    public void updateBacklog(Long id, Backlog backlog)
     {
-        iBacklogRepository.delete(id);
+        try
+        {
+            if(getBacklog(id) != null)
+            {
+                backlog.setId(id);
+                iBacklogRepository.save(backlog);
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
+        catch (Exception e)
+        {
+            throw new BacklogNotFoundException(id);
+        }
     }
 
-    public void updateBacklog(long id, Backlog backlog)
+    public void removeBacklog(Long id)
     {
-        backlog.setId(id);
-        iBacklogRepository.save(backlog);
+        try
+        {
+            if(getBacklog(id) != null)
+            {
+                iBacklogRepository.delete(id);
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
+        catch(Exception e)
+        {
+            throw new BacklogNotFoundException(id);
+        }
     }
 }

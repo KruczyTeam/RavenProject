@@ -31,7 +31,7 @@ public class TaskController
         return taskService.getTasksByUserStoryId(id);
     }
 
-    // fix exception
+    // fix Exception
     @PostMapping(value = "/userstories/{id}/tasks/")
     public void addTask(@PathVariable Long id, @Valid @RequestBody Task task) throws UserStoryNotFoundException
     {

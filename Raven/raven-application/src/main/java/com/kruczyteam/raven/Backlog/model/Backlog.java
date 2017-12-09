@@ -21,11 +21,6 @@ public class Backlog
     {
     }
 
-    public Backlog(String name)
-    {
-        this.name = name;
-    }
-
     public Long getId() {
         return id;
     }
