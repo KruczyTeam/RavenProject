@@ -9,7 +9,7 @@ public interface IBacklogService
 {
     List<Backlog> getAllBacklogs();
     void addBacklog(Backlog backlog);
-    Backlog getBacklog(Long id) throws BacklogNotFoundException;
-    void updateBacklog(Long id, Backlog backlog) throws BacklogNotFoundException;
-    void removeBacklog(Long id) throws BacklogNotFoundException;
+    Backlog getBacklog(Long backlogId) throws BacklogNotFoundException;
+    void updateBacklog(Long backlogId, Backlog backlog) throws BacklogNotFoundException;
+    void deleteBacklog(Long backlogId) throws BacklogNotFoundException;
 }

@@ -47,6 +47,6 @@ public class BacklogController
     @DeleteMapping(value = "/{backlogId}")
     public void deleteBacklog(@PathVariable Long backlogId)
     {
-        backlogService.removeBacklog(backlogId);
+        backlogService.deleteBacklog(backlogId);
     }
 }

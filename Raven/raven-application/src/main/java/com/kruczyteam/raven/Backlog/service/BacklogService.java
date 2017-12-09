@@ -30,13 +30,13 @@ public class BacklogService implements IBacklogService
         iBacklogRepository.save(backlog);
     }
 
-    public Backlog getBacklog(Long id)
+    public Backlog getBacklog(Long backlogId)
     {
         try
         {
-            if(iBacklogRepository.findOne(id) != null)
+            if(iBacklogRepository.findOne(backlogId) != null)
             {
-                return iBacklogRepository.findOne(id);
+                return iBacklogRepository.findOne(backlogId);
             }
             else
             {
@@ -45,17 +45,17 @@ public class BacklogService implements IBacklogService
         }
         catch(Exception e)
         {
-            throw new BacklogNotFoundException(id);
+            throw new BacklogNotFoundException(backlogId);
         }
     }
 
-    public void updateBacklog(Long id, Backlog backlog)
+    public void updateBacklog(Long backlogId, Backlog backlog)
     {
         try
         {
-            if(getBacklog(id) != null)
+            if(getBacklog(backlogId) != null)
             {
-                backlog.setId(id);
+                backlog.setId(backlogId);
                 iBacklogRepository.save(backlog);
             }
             else
@@ -65,17 +65,17 @@ public class BacklogService implements IBacklogService
         }
         catch (Exception e)
         {
-            throw new BacklogNotFoundException(id);
+            throw new BacklogNotFoundException(backlogId);
         }
     }
 
-    public void removeBacklog(Long id)
+    public void deleteBacklog(Long backlogId)
     {
         try
         {
-            if(getBacklog(id) != null)
+            if(getBacklog(backlogId) != null)
             {
-                iBacklogRepository.delete(id);
+                iBacklogRepository.delete(backlogId);
             }
             else
             {
@@ -84,7 +84,7 @@ public class BacklogService implements IBacklogService
         }
         catch(Exception e)
         {
-            throw new BacklogNotFoundException(id);
+            throw new BacklogNotFoundException(backlogId);
         }
     }
 }
