@@ -2,6 +2,7 @@ package com.kruczyteam.raven.UserStory.model;
 
 import com.kruczyteam.raven.Backlog.model.Backlog;
 import com.kruczyteam.raven.ProgressState;
+import net.minidev.json.annotate.JsonIgnore;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
@@ -22,7 +23,7 @@ public class UserStory
     @Column(name = "progress_state")
     private ProgressState progressState;
 
-    @ManyToOne
+    @ManyToOne()
     @JoinColumn(name = "backlog_id", nullable = false)
     private Backlog backlog;
 

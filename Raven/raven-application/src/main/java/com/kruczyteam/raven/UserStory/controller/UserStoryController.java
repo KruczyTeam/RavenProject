@@ -1,7 +1,7 @@
 package com.kruczyteam.raven.UserStory.controller;
 
-import com.kruczyteam.raven.Backlog.service.BacklogService;
 import com.kruczyteam.raven.Backlog.model.Backlog;
+import com.kruczyteam.raven.Backlog.service.BacklogService;
 import com.kruczyteam.raven.UserStory.model.UserStory;
 import com.kruczyteam.raven.UserStory.exception.UserStoryNotFoundException;
 import com.kruczyteam.raven.UserStory.service.UserStoryService;
@@ -28,20 +28,25 @@ public class UserStoryController
     @GetMapping(value = "/")
     public List<UserStory> getUserStories(@PathVariable Long backlogId)
     {
-        return userStoryService.getUserStoriesByBacklogId(backlogId);
+        Backlog backlog = backlogService.getBacklog(backlogId);
+
+        return userStoryService.getUserStories(backlog);
     }
 
     @PostMapping(value = "/")
     public void addUserStory(@PathVariable Long backlogId, @Valid @RequestBody UserStory userStory)
     {
-        userStory.setBacklog(backlogService.getBacklog(backlogId));
-        userStoryService.addUserStory(userStory);
+        Backlog backlog = backlogService.getBacklog(backlogId);
+
+        userStoryService.addUserStory(backlog, userStory);
     }
 
     @GetMapping(value = "/{userStoryId}")
     public UserStory getUserStory(@PathVariable Long backlogId, @PathVariable Long userStoryId) throws UserStoryNotFoundException
     {
-        return userStoryService.getUserStoryByBacklogIdAndUserStoryId(backlogId, userStoryId);
+        Backlog backlog = backlogService.getBacklog(backlogId);
+
+        return userStoryService.getUserStory(backlog, userStoryId);
     }
 
     @PutMapping(value = "/{userStoryId}")
@@ -55,6 +60,8 @@ public class UserStoryController
     @DeleteMapping(value = "/{userStoryId}")
     public void deleteUserStory(@PathVariable Long backlogId, @PathVariable Long userStoryId) throws UserStoryNotFoundException
     {
-        userStoryService.deleteUserStory(backlogId, userStoryId);
+        Backlog backlog = backlogService.getBacklog(backlogId);
+
+        userStoryService.deleteUserStory(backlog, userStoryId);
     }
 }

@@ -1,13 +1,21 @@
-package com.kruczyteam.raven.Backlog.exception;
+package com.kruczyteam.raven;
 
+import com.kruczyteam.raven.Backlog.exception.BacklogNotFoundException;
+import com.kruczyteam.raven.UserStory.exception.UserStoryNotFoundException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
-public class BacklogControllerAdvice
+public class GlobalControllerAdvice
 {
     @ExceptionHandler(BacklogNotFoundException.class)
     public Exception notFoundException(final BacklogNotFoundException e)
+    {
+        return e;
+    }
+
+    @ExceptionHandler(UserStoryNotFoundException.class)
+    public Exception notFoundException(final UserStoryNotFoundException e)
     {
         return e;
     }
