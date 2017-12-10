@@ -9,7 +9,7 @@
     <version>1.0</version>
 
     <modules>
-        <module>raven-model</module>
+        <module>raven-application</module>
     </modules>
 
     <parent>

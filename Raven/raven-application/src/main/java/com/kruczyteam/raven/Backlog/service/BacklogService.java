@@ -20,7 +20,7 @@ public class BacklogService implements IBacklogService
         this.iBacklogRepository = iBacklogRepository;
     }
 
-    public List<Backlog> getAllBacklogs()
+    public List<Backlog> getBacklogs()
     {
         return Lists.newArrayList(iBacklogRepository.findAll());
     }
@@ -55,7 +55,6 @@ public class BacklogService implements IBacklogService
         {
             if(getBacklog(backlogId) != null)
             {
-                backlog.setId(backlogId);
                 iBacklogRepository.save(backlog);
             }
             else

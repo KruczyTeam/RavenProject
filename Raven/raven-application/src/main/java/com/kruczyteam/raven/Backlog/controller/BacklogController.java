@@ -21,9 +21,9 @@ public class BacklogController
     }
 
     @GetMapping(value = "/")
-    public List<Backlog> getAllBacklogs()
+    public List<Backlog> getBacklogs()
     {
-        return backlogService.getAllBacklogs();
+        return backlogService.getBacklogs();
     }
 
     @PostMapping(value = "/")

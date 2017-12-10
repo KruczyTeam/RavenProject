@@ -1,8 +1,10 @@
 package com.kruczyteam.raven.Backlog.model;
 
+import com.kruczyteam.raven.UserStory.model.UserStory;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "backlogs")

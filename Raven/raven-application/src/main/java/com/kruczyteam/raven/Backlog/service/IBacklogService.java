@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface IBacklogService
 {
-    List<Backlog> getAllBacklogs();
+    List<Backlog> getBacklogs();
     void addBacklog(Backlog backlog);
     Backlog getBacklog(Long backlogId) throws BacklogNotFoundException;
     void updateBacklog(Long backlogId, Backlog backlog) throws BacklogNotFoundException;
