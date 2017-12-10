@@ -1,6 +1,9 @@
 package com.kruczyteam.raven.Task.service;
 
+import com.kruczyteam.raven.GlobalControllerAdvice;
 import com.kruczyteam.raven.ProgressState;
+import com.kruczyteam.raven.Task.exception.TaskInvalidUserStoryException;
+import com.kruczyteam.raven.Task.exception.TaskNotFoundException;
 import com.kruczyteam.raven.Task.model.Task;
 import com.kruczyteam.raven.Task.repository.ITaskRepository;
 import com.kruczyteam.raven.UserStory.model.UserStory;
@@ -11,6 +14,7 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
 
 @Service
 public class TaskService implements ITaskService
@@ -24,50 +28,117 @@ public class TaskService implements ITaskService
     }
 
     @Override
-    public List<Task> getTasksByUserStoryId(Long userStoryId)
+    public List<Task> getTasks(UserStory userStory)
     {
-        return iTaskRepository.findByUserStoryId(userStoryId);
+        return iTaskRepository.findByUserStory(userStory);
     }
 
     @Override
-    public void addTask(Task task, UserStory userStory)
+    public void addTask(UserStory userStory, Task task)
     {
         task.setUserStory(userStory);
-        task.setCreationDate(LocalDateTime.from(Instant.now()));
+        task.setCreationDate(LocalDateTime.now());
         task.setProgressState(ProgressState.TODO);
 
         iTaskRepository.save(task);
     }
 
     @Override
-    public Task getTask(Long id)
+    public Task getTask(UserStory userStory, Long taskId)
     {
-        return iTaskRepository.findOne(id);
+        try
+        {
+            Task tempTask = iTaskRepository.findOne(taskId);
+
+            if(tempTask != null)
+            {
+                if(tempTask.getUserStory().getId().equals(userStory.getId()))
+                {
+                    return tempTask;
+                }
+                else
+                {
+                    throw new TaskInvalidUserStoryException(taskId, userStory.getId());
+                }
+            }
+            else
+            {
+                throw new TaskNotFoundException(taskId);
+            }
+        }
+        catch (TaskInvalidUserStoryException | TaskNotFoundException e)
+        {
+            GlobalControllerAdvice.LOGGER.log(Level.SEVERE, e.getMessage(), e);
+
+            throw e;
+        }
     }
 
     @Override
-    public void deleteTask(Long id)
+    public void updateTask(UserStory userStory, Long taskId, Task task)
     {
-        if(iTaskRepository.exists(id))
+        try
         {
-            iTaskRepository.delete(id);
+            Task tempTask = iTaskRepository.findOne(taskId);
+
+            if(tempTask != null)
+            {
+                if(tempTask.getUserStory().getId().equals(userStory.getId()))
+                {
+                    // todo przemyśleć, które dane chciałbym aktualizować
+                    task.setId(taskId);
+                    task.setUserStory(userStory);
+                    task.setProgressState(tempTask.getProgressState());
+                    task.setCreationDate(tempTask.getCreationDate());
+
+                    iTaskRepository.save(task);
+                }
+                else
+                {
+                    throw new TaskInvalidUserStoryException(taskId, userStory.getId());
+                }
+            }
+            else
+            {
+                throw new TaskNotFoundException(taskId);
+            }
         }
-        else
+        catch (TaskInvalidUserStoryException | TaskNotFoundException e)
         {
-            //throw new Exception();
+            GlobalControllerAdvice.LOGGER.log(Level.SEVERE, e.getMessage(), e);
+
+            throw e;
         }
     }
 
     @Override
-    public void updateTask(Long id, Task task)
+    public void deleteTask(UserStory userStory, Long taskId)
     {
-        if(iTaskRepository.exists(id))
+        try
         {
-            iTaskRepository.save(task);
+            Task tempTask = iTaskRepository.findOne(taskId);
+
+            if(tempTask != null)
+            {
+                if(tempTask.getUserStory().getId().equals(userStory.getId()))
+                {
+                    iTaskRepository.delete(taskId);
+                }
+                else
+                {
+                    throw new TaskInvalidUserStoryException(taskId, userStory.getId());
+                }
+            }
+            else
+            {
+                throw new TaskNotFoundException(taskId);
+            }
         }
-        else
+        catch (TaskInvalidUserStoryException | TaskNotFoundException e)
         {
-            //throw new Exception();
+            GlobalControllerAdvice.LOGGER.log(Level.SEVERE, e.getMessage(), e);
+
+            throw e;
         }
     }
 }

@@ -1,5 +1,7 @@
 package com.kruczyteam.raven.Task.controller;
 
+import com.kruczyteam.raven.Backlog.model.Backlog;
+import com.kruczyteam.raven.Backlog.service.BacklogService;
 import com.kruczyteam.raven.Task.model.Task;
 import com.kruczyteam.raven.Task.service.TaskService;
 import com.kruczyteam.raven.UserStory.exception.UserStoryNotFoundException;
@@ -12,48 +14,63 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/api/v1")
+@RequestMapping(value = "/api/v1/backlogs/{backlogId}/userstories/{userStoryId}/tasks")
 public class TaskController
 {
     private TaskService taskService;
     private UserStoryService userStoryService;
+    private BacklogService backlogService;
 
     @Autowired
-    public TaskController(TaskService taskService, UserStoryService userStoryService)
+    public TaskController(TaskService taskService, UserStoryService userStoryService, BacklogService backlogService)
     {
         this.taskService = taskService;
         this.userStoryService = userStoryService;
+        this.backlogService = backlogService;
     }
 
-    @GetMapping(value = "/userstories/{id}/tasks/")
-    public List<Task> getTasks(@PathVariable Long id)
+    @GetMapping(value = "/")
+    public List<Task> getTasks(@PathVariable Long backlogId, @PathVariable Long userStoryId)
     {
-        return taskService.getTasksByUserStoryId(id);
+        Backlog backlog = backlogService.getBacklog(backlogId);
+        UserStory userStory = userStoryService.getUserStory(backlog, userStoryId);
+
+        return taskService.getTasks(userStory);
     }
 
-    // fix Exception
-    @PostMapping(value = "/userstories/{id}/tasks/")
-    public void addTask(@PathVariable Long id, @Valid @RequestBody Task task) throws UserStoryNotFoundException
+    @PostMapping(value = "/")
+    public void addTask(@PathVariable Long backlogId, @PathVariable Long userStoryId, @Valid @RequestBody Task task)
     {
-        //UserStory userStory = userStoryService.getUserStory(id);
-       // taskService.addTask(task, userStory);
+        Backlog backlog = backlogService.getBacklog(backlogId);
+        UserStory userStory = userStoryService.getUserStory(backlog, userStoryId);
+
+        taskService.addTask(userStory, task);
     }
 
-    @GetMapping(value = "/tasks/{id}")
-    public Task getTask(@PathVariable Long id)
+    @GetMapping(value = "/{taskId}")
+    public Task getTask(@PathVariable Long backlogId, @PathVariable Long userStoryId, @PathVariable Long taskId)
     {
-        return taskService.getTask(id);
+        Backlog backlog = backlogService.getBacklog(backlogId);
+        UserStory userStory = userStoryService.getUserStory(backlog, userStoryId);
+
+        return taskService.getTask(userStory, taskId);
     }
 
-    @DeleteMapping(value = "/tasks/{id}")
-    public void deleteTask(@PathVariable Long id)
+    @PutMapping(value = "/{taskId}")
+    public void updateTask(@PathVariable Long backlogId, @PathVariable Long userStoryId, @PathVariable Long taskId, @Valid @RequestBody Task task)
     {
-        taskService.deleteTask(id);
+        Backlog backlog = backlogService.getBacklog(backlogId);
+        UserStory userStory = userStoryService.getUserStory(backlog, userStoryId);
+
+        taskService.updateTask(userStory, taskId, task);
     }
 
-    @PutMapping(value = "/tasks/{id}")
-    public void updateTask(@PathVariable Long id, @Valid @RequestBody Task task)
+    @DeleteMapping(value = "/{taskId}")
+    public void deleteTask(@PathVariable Long backlogId, @PathVariable Long userStoryId, @PathVariable Long taskId)
     {
-        taskService.updateTask(id, task);
+        Backlog backlog = backlogService.getBacklog(backlogId);
+        UserStory userStory = userStoryService.getUserStory(backlog, userStoryId);
+
+        taskService.deleteTask(userStory, taskId);
     }
 }

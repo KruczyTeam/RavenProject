@@ -7,10 +7,9 @@ import java.util.List;
 
 public interface ITaskService
 {
-    List<Task> getTasksByUserStoryId(Long userStoryId);
-    void addTask(Task task, UserStory userStory);
-
-    Task getTask(Long id);
-    void deleteTask(Long id);
-    void updateTask(Long id, Task task);
+    List<Task> getTasks(UserStory userStory);
+    void addTask(UserStory userStory, Task task);
+    Task getTask(UserStory userStory, Long taskId);
+    void updateTask(UserStory userStory, Long taskId, Task task);
+    void deleteTask(UserStory userStory, Long taskId);
 }

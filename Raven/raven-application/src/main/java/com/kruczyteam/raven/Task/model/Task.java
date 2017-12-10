@@ -30,14 +30,14 @@ public class Task
     @Column(name = "creation_date")
     private LocalDateTime creationDate;
 
-    @Column(name = "current")
-    private String current;
+    @Column(name = "owner")
+    private String owner;
 
     @Column(name = "progress_state")
     private ProgressState progressState;
 
     @ManyToOne
-    @JoinColumn(name = "user_story_id")
+    @JoinColumn(name = "user_story_id", nullable = false)
     private UserStory userStory;
 
     public Long getId()
@@ -80,14 +80,14 @@ public class Task
         this.creationDate = creationDate;
     }
 
-    public String getCurrent()
+    public String getOwner()
     {
-        return current;
+        return owner;
     }
 
-    public void setCurrent(String current)
+    public void setOwner(String owner)
     {
-        this.current = current;
+        this.owner = owner;
     }
 
     public ProgressState getProgressState()
