@@ -1,11 +1,13 @@
 package com.kruczyteam.raven.UserStory.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.kruczyteam.raven.Backlog.model.Backlog;
 import com.kruczyteam.raven.ProgressState;
-import net.minidev.json.annotate.JsonIgnore;
+import com.kruczyteam.raven.Task.model.Task;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "user_stories")
@@ -23,9 +25,13 @@ public class UserStory
     @Column(name = "progress_state")
     private ProgressState progressState;
 
-    @ManyToOne()
+    @ManyToOne
     @JoinColumn(name = "backlog_id", nullable = false)
     private Backlog backlog;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "userStory", orphanRemoval = true)
+    private List<Task> tasks;
 
     public UserStory()
     {

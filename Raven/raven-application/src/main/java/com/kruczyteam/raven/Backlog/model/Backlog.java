@@ -1,5 +1,6 @@
 package com.kruczyteam.raven.Backlog.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.kruczyteam.raven.UserStory.model.UserStory;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -18,6 +19,10 @@ public class Backlog
     @NotEmpty
     @Column(name = "name")
     private String name;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "backlog", orphanRemoval = true)
+    private List<UserStory> userStories;
 
     public Backlog()
     {

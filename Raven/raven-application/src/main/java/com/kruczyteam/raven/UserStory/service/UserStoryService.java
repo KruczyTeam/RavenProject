@@ -1,6 +1,7 @@
 package com.kruczyteam.raven.UserStory.service;
 
 import com.kruczyteam.raven.Backlog.model.Backlog;
+import com.kruczyteam.raven.GlobalControllerAdvice;
 import com.kruczyteam.raven.ProgressState;
 import com.kruczyteam.raven.UserStory.exception.UserStoryInvalidBacklogException;
 import com.kruczyteam.raven.UserStory.exception.UserStoryNotFoundException;
@@ -11,13 +12,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 @Service
 public class UserStoryService implements IUserStoryService
 {
-    private final Logger logger = Logger.getLogger(getClass().getName());
-
     private IUserStoryRepository iUserStoryRepository;
 
     @Autowired
@@ -66,7 +64,7 @@ public class UserStoryService implements IUserStoryService
         }
         catch (UserStoryInvalidBacklogException | UserStoryNotFoundException e)
         {
-            logger.log(Level.SEVERE, e.getMessage(), e);
+            GlobalControllerAdvice.LOGGER.log(Level.SEVERE, e.getMessage(), e);
 
             throw e;
         }
@@ -101,7 +99,7 @@ public class UserStoryService implements IUserStoryService
         }
         catch (UserStoryInvalidBacklogException | UserStoryNotFoundException e)
         {
-            logger.log(Level.SEVERE, e.getMessage(), e);
+            GlobalControllerAdvice.LOGGER.log(Level.SEVERE, e.getMessage(), e);
 
             throw e;
         }
@@ -132,7 +130,7 @@ public class UserStoryService implements IUserStoryService
         }
         catch (UserStoryInvalidBacklogException | UserStoryNotFoundException e)
         {
-            logger.log(Level.SEVERE, e.getMessage(), e);
+            GlobalControllerAdvice.LOGGER.log(Level.SEVERE, e.getMessage(), e);
 
             throw e;
         }

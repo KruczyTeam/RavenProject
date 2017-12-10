@@ -9,5 +9,4 @@ import java.util.List;
 public interface IUserStoryRepository extends CrudRepository<UserStory,Long>
 {
     List<UserStory> findByBacklog(Backlog backlog);
-    UserStory findByBacklogAndId(Backlog backlog, Long userStoryId);
 }

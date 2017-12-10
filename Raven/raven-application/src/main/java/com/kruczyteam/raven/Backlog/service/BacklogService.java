@@ -3,11 +3,13 @@ package com.kruczyteam.raven.Backlog.service;
 import com.kruczyteam.raven.Backlog.exception.BacklogNotFoundException;
 import com.kruczyteam.raven.Backlog.model.Backlog;
 import com.kruczyteam.raven.Backlog.repository.IBacklogRepository;
+import com.kruczyteam.raven.GlobalControllerAdvice;
 import org.assertj.core.util.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.logging.Level;
 
 @Service
 public class BacklogService implements IBacklogService
@@ -34,18 +36,22 @@ public class BacklogService implements IBacklogService
     {
         try
         {
-            if(iBacklogRepository.findOne(backlogId) != null)
+            Backlog tempBacklog = iBacklogRepository.findOne(backlogId);
+
+            if(tempBacklog != null)
             {
-                return iBacklogRepository.findOne(backlogId);
+                return tempBacklog;
             }
             else
             {
-                throw new Exception();
+                throw new BacklogNotFoundException(backlogId);
             }
         }
-        catch(Exception e)
+        catch (BacklogNotFoundException e)
         {
-            throw new BacklogNotFoundException(backlogId);
+            GlobalControllerAdvice.LOGGER.log(Level.SEVERE, e.getMessage(), e);
+
+            throw e;
         }
     }
 
@@ -53,18 +59,23 @@ public class BacklogService implements IBacklogService
     {
         try
         {
-            if(getBacklog(backlogId) != null)
+            Backlog tempBacklog = iBacklogRepository.findOne(backlogId);
+
+            if(tempBacklog != null)
             {
+                backlog.setId(backlogId);
                 iBacklogRepository.save(backlog);
             }
             else
             {
-                throw new Exception();
+                throw new BacklogNotFoundException(backlogId);
             }
         }
-        catch (Exception e)
+        catch (BacklogNotFoundException e)
         {
-            throw new BacklogNotFoundException(backlogId);
+            GlobalControllerAdvice.LOGGER.log(Level.SEVERE, e.getMessage(), e);
+
+            throw e;
         }
     }
 
@@ -72,18 +83,22 @@ public class BacklogService implements IBacklogService
     {
         try
         {
-            if(getBacklog(backlogId) != null)
+            Backlog tempBacklog = iBacklogRepository.findOne(backlogId);
+
+            if(tempBacklog != null)
             {
                 iBacklogRepository.delete(backlogId);
             }
             else
             {
-                throw new Exception();
+                throw new BacklogNotFoundException(backlogId);
             }
         }
-        catch(Exception e)
+        catch (BacklogNotFoundException e)
         {
-            throw new BacklogNotFoundException(backlogId);
+            GlobalControllerAdvice.LOGGER.log(Level.SEVERE, e.getMessage(), e);
+
+            throw e;
         }
     }
 }
