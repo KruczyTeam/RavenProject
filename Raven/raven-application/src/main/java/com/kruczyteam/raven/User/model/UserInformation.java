@@ -5,8 +5,8 @@ import org.hibernate.validator.constraints.NotEmpty;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "users")
-public class User {
+@Table(name = "users",uniqueConstraints={@UniqueConstraint(columnNames = {"login" , "email"})})
+public class UserInformation {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id")
@@ -24,7 +24,18 @@ public class User {
 	@Column(name = "password")
 	private String password;
 
-	public Long getId() {
+    @Column(name="role")
+	private String role;
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public Long getId() {
 		return id;
 	}
 

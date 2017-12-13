@@ -1,7 +1,7 @@
 package com.kruczyteam.raven.User.controller;
 
 import com.kruczyteam.raven.User.exception.UserNotFoundException;
-import com.kruczyteam.raven.User.model.User;
+import com.kruczyteam.raven.User.model.UserInformation;
 import com.kruczyteam.raven.User.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -14,13 +14,13 @@ public class UserController {
 	UserService userService;
 
 	@PostMapping(value = "/create/")
-	public void createUser(@RequestBody User user)
+	public void createUser(@RequestBody UserInformation userInformation)
 	{
-		userService.createUser(user);
+		userService.createUser(userInformation);
 	}
 
 	@GetMapping(value = "/retrivepassword/")
 	public String retriveUserPassword(@RequestHeader(value="Login") String login) throws UserNotFoundException {
-		return userService.getUserByLogin(login);
+		return userService.getUserByLogin(login).getPassword();
 	}
 }

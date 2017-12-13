@@ -10,6 +10,6 @@ public class RavenSpringBootApplication
 {
     public static void main(String[] args) throws Exception
     {
-        SpringApplication.run(RavenSpringBootApplication.class, args);
+	    SpringApplication.run(RavenSpringBootApplication.class, args);
     }
 }
