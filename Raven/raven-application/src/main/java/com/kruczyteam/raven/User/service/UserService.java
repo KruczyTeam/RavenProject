@@ -1,5 +1,6 @@
 package com.kruczyteam.raven.User.service;
 
+import com.kruczyteam.raven.User.exception.UserExistException;
 import com.kruczyteam.raven.User.exception.UserNotFoundException;
 import com.kruczyteam.raven.User.model.UserInformation;
 import com.kruczyteam.raven.User.repository.IUserRepository;
@@ -16,39 +17,54 @@ import org.springframework.stereotype.Service;
 import java.util.Arrays;
 
 @Service
-public class UserService implements UserDetailsService,IUserService {
-
+public class UserService implements UserDetailsService, IUserService
+{
 	private IUserRepository userRepository;
+	private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
 	@Autowired
-	public UserService(IUserRepository userRepository) {
+	public UserService(IUserRepository userRepository)
+	{
 		this.userRepository = userRepository;
 	}
 
-	public void createUser(UserInformation userInformation) {
+	public void createUser(UserInformation userInformation) throws UserExistException
+	{
 		UserInformation user = userRepository.findByLogin(userInformation.getLogin());
-		userInformation.setPassword(new BCryptPasswordEncoder().encode(userInformation.getPassword()));
-		userInformation.setRole("ROLE_User");
-		userRepository.save(userInformation);
+		if(user==null)
+		{
+			userInformation.setPassword(encoder.encode(userInformation.getPassword()));
+			userInformation.setRole("ROLE_User");
+			userRepository.save(userInformation);
+		}
+		else
+		{
+			throw new UserExistException();
+		}
 	}
 
-	public UserDetails getUserByLogin(String login) throws UserNotFoundException {
+	public UserDetails getUserByLogin(String login) throws UserNotFoundException
+	{
 		UserInformation userInformation = userRepository.findByLogin(login);
 
-		if(userInformation !=null) {
+		if (userInformation != null)
+		{
 			GrantedAuthority authority = new SimpleGrantedAuthority(userInformation.getRole());
-			UserDetails userDetails = new User(userInformation.getLogin(),userInformation.getPassword(), Arrays.asList(authority));
+			UserDetails userDetails = new User(userInformation.getLogin(), userInformation.getPassword(), Arrays.asList(authority));
 			return userDetails;
 		}
-		 throw new UserNotFoundException();
+		throw new UserNotFoundException();
 	}
 
 	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		try {
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException
+	{
+		try
+		{
 			return getUserByLogin(username);
-		} catch (UserNotFoundException e) {
-			throw  new UsernameNotFoundException("userName");
+		} catch (UserNotFoundException e)
+		{
+			throw new UsernameNotFoundException("userName");
 		}
 	}
 }

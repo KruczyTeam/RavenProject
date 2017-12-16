@@ -8,14 +8,18 @@ import java.util.List;
 
 public interface IBacklogService
 {
-    @Secured({"ROLE_Admin","ROLE_User"})
-    List<Backlog> getBacklogs();
-	@Secured({"ROLE_Admin","ROLE_User"})
+	@Secured({"ROLE_Admin", "ROLE_User"})
+	List<Backlog> getBacklogs();
+
+	@Secured({"ROLE_Admin", "ROLE_User"})
 	void addBacklog(Backlog backlog);
-	@Secured({"ROLE_Admin"})
+
+	@Secured({"ROLE_Admin", "ROLE_User"})
 	Backlog getBacklog(Long backlogId) throws BacklogNotFoundException;
+
 	@Secured({"ROLE_Admin"})
 	void updateBacklog(Long backlogId, Backlog backlog) throws BacklogNotFoundException;
+
 	@Secured({"ROLE_Admin"})
 	void deleteBacklog(Long backlogId) throws BacklogNotFoundException;
 }

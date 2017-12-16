@@ -14,91 +14,85 @@ import java.util.logging.Level;
 @Service
 public class BacklogService implements IBacklogService
 {
-    private IBacklogRepository iBacklogRepository;
+	private IBacklogRepository iBacklogRepository;
 
-    @Autowired
-    public BacklogService(IBacklogRepository iBacklogRepository)
-    {
-        this.iBacklogRepository = iBacklogRepository;
-    }
+	@Autowired
+	public BacklogService(IBacklogRepository iBacklogRepository)
+	{
+		this.iBacklogRepository = iBacklogRepository;
+	}
 
-    public List<Backlog> getBacklogs()
-    {
-        return Lists.newArrayList(iBacklogRepository.findAll());
-    }
+	public List<Backlog> getBacklogs()
+	{
+		return Lists.newArrayList(iBacklogRepository.findAll());
+	}
 
-    public void addBacklog(Backlog backlog)
-    {
-        iBacklogRepository.save(backlog);
-    }
+	public void addBacklog(Backlog backlog)
+	{
+		iBacklogRepository.save(backlog);
+	}
 
-    public Backlog getBacklog(Long backlogId)
-    {
-        try
-        {
-            Backlog tempBacklog = iBacklogRepository.findOne(backlogId);
+	public Backlog getBacklog(Long backlogId)
+	{
+		try
+		{
+			Backlog tempBacklog = iBacklogRepository.findOne(backlogId);
 
-            if(tempBacklog != null)
-            {
-                return tempBacklog;
-            }
-            else
-            {
-                throw new BacklogNotFoundException(backlogId);
-            }
-        }
-        catch (BacklogNotFoundException e)
-        {
-            GlobalControllerAdvice.LOGGER.log(Level.SEVERE, e.getMessage(), e);
+			if (tempBacklog != null)
+			{
+				return tempBacklog;
+			} else
+			{
+				throw new BacklogNotFoundException(backlogId);
+			}
+		} catch (BacklogNotFoundException e)
+		{
+			GlobalControllerAdvice.LOGGER.log(Level.SEVERE, e.getMessage(), e);
 
-            throw e;
-        }
-    }
+			throw e;
+		}
+	}
 
-    public void updateBacklog(Long backlogId, Backlog backlog)
-    {
-        try
-        {
-            Backlog tempBacklog = iBacklogRepository.findOne(backlogId);
+	public void updateBacklog(Long backlogId, Backlog backlog)
+	{
+		try
+		{
+			Backlog tempBacklog = iBacklogRepository.findOne(backlogId);
 
-            if(tempBacklog != null)
-            {
-                backlog.setId(backlogId);
-                iBacklogRepository.save(backlog);
-            }
-            else
-            {
-                throw new BacklogNotFoundException(backlogId);
-            }
-        }
-        catch (BacklogNotFoundException e)
-        {
-            GlobalControllerAdvice.LOGGER.log(Level.SEVERE, e.getMessage(), e);
+			if (tempBacklog != null)
+			{
+				backlog.setId(backlogId);
+				iBacklogRepository.save(backlog);
+			} else
+			{
+				throw new BacklogNotFoundException(backlogId);
+			}
+		} catch (BacklogNotFoundException e)
+		{
+			GlobalControllerAdvice.LOGGER.log(Level.SEVERE, e.getMessage(), e);
 
-            throw e;
-        }
-    }
+			throw e;
+		}
+	}
 
-    public void deleteBacklog(Long backlogId)
-    {
-        try
-        {
-            Backlog tempBacklog = iBacklogRepository.findOne(backlogId);
+	public void deleteBacklog(Long backlogId)
+	{
+		try
+		{
+			Backlog tempBacklog = iBacklogRepository.findOne(backlogId);
 
-            if(tempBacklog != null)
-            {
-                iBacklogRepository.delete(backlogId);
-            }
-            else
-            {
-                throw new BacklogNotFoundException(backlogId);
-            }
-        }
-        catch (BacklogNotFoundException e)
-        {
-            GlobalControllerAdvice.LOGGER.log(Level.SEVERE, e.getMessage(), e);
+			if (tempBacklog != null)
+			{
+				iBacklogRepository.delete(backlogId);
+			} else
+			{
+				throw new BacklogNotFoundException(backlogId);
+			}
+		} catch (BacklogNotFoundException e)
+		{
+			GlobalControllerAdvice.LOGGER.log(Level.SEVERE, e.getMessage(), e);
 
-            throw e;
-        }
-    }
+			throw e;
+		}
+	}
 }

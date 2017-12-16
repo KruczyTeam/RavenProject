@@ -8,8 +8,8 @@ import org.springframework.cache.annotation.EnableCaching;
 @EnableCaching
 public class RavenSpringBootApplication
 {
-    public static void main(String[] args) throws Exception
-    {
-	    SpringApplication.run(RavenSpringBootApplication.class, args);
-    }
+	public static void main(String[] args) throws Exception
+	{
+		SpringApplication.run(RavenSpringBootApplication.class, args);
+	}
 }

@@ -11,36 +11,40 @@ import java.util.List;
 @Table(name = "backlogs")
 public class Backlog
 {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
-    private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "id")
+	private Long id;
 
-    @NotEmpty
-    @Column(name = "name")
-    private String name;
+	@NotEmpty
+	@Column(name = "name")
+	private String name;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "backlog", orphanRemoval = true)
-    private List<UserStory> userStories;
+	@JsonIgnore
+	@OneToMany(mappedBy = "backlog", orphanRemoval = true)
+	private List<UserStory> userStories;
 
-    public Backlog()
-    {
-    }
+	public Backlog()
+	{
+	}
 
-    public Long getId() {
-        return id;
-    }
+	public Long getId()
+	{
+		return id;
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public void setId(Long id)
+	{
+		this.id = id;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public String getName()
+	{
+		return name;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public void setName(String name)
+	{
+		this.name = name;
+	}
 }
