@@ -6,8 +6,6 @@ import com.kruczyteam.raven.UserStory.exception.UserStoryNotFoundException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import java.util.logging.Logger;
-
 @ControllerAdvice
 public class GlobalControllerAdvice
 {
