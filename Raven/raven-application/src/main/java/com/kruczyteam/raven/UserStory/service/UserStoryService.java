@@ -1,7 +1,6 @@
 package com.kruczyteam.raven.UserStory.service;
 
 import com.kruczyteam.raven.Backlog.model.Backlog;
-import com.kruczyteam.raven.GlobalControllerAdvice;
 import com.kruczyteam.raven.ProgressState;
 import com.kruczyteam.raven.UserStory.exception.UserStoryInvalidBacklogException;
 import com.kruczyteam.raven.UserStory.exception.UserStoryNotFoundException;
@@ -11,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.logging.Level;
 
 @Service
 public class UserStoryService implements IUserStoryService
@@ -42,97 +40,48 @@ public class UserStoryService implements IUserStoryService
     @Override
     public UserStory getUserStory(Backlog backlog, Long userStoryId)
     {
-        try
-        {
-            UserStory tempUserStory = iUserStoryRepository.findOne(userStoryId);
-
-            if(tempUserStory != null)
-            {
-                if(tempUserStory.getBacklog().getId().equals(backlog.getId()))
-                {
-                    return tempUserStory;
-                }
-                else
-                {
-                    throw new UserStoryInvalidBacklogException(userStoryId, backlog.getId());
-                }
-            }
-            else
-            {
-                throw new UserStoryNotFoundException(userStoryId);
-            }
-        }
-        catch (UserStoryInvalidBacklogException | UserStoryNotFoundException e)
-        {
-            GlobalControllerAdvice.LOGGER.log(Level.SEVERE, e.getMessage(), e);
-
-            throw e;
-        }
+        return validateUserStory(backlog, userStoryId);
     }
 
     @Override
     public void updateUserStory(Backlog backlog, Long userStoryId, UserStory userStory)
     {
-        try
-        {
-            UserStory tempUserStory = iUserStoryRepository.findOne(userStoryId);
+        UserStory tempUserStory = validateUserStory(backlog, userStoryId);
 
-            if(tempUserStory != null)
-            {
-                if(tempUserStory.getBacklog().getId().equals(backlog.getId()))
-                {
-                    userStory.setId(userStoryId);
-                    userStory.setBacklog(backlog);
-                    userStory.setProgressState(tempUserStory.getProgressState());
+        userStory.setId(userStoryId);
+        userStory.setBacklog(backlog);
+        userStory.setProgressState(tempUserStory.getProgressState());
 
-                    iUserStoryRepository.save(userStory);
-                }
-                else
-                {
-                    throw new UserStoryInvalidBacklogException(userStoryId, backlog.getId());
-                }
-            }
-            else
-            {
-                throw new UserStoryNotFoundException(userStoryId);
-            }
-        }
-        catch (UserStoryInvalidBacklogException | UserStoryNotFoundException e)
-        {
-            GlobalControllerAdvice.LOGGER.log(Level.SEVERE, e.getMessage(), e);
-
-            throw e;
-        }
+        iUserStoryRepository.save(userStory);
     }
 
     @Override
     public void deleteUserStory(Backlog backlog, Long userStoryId)
     {
-        try
-        {
-            UserStory tempUserStory = iUserStoryRepository.findOne(userStoryId);
+        validateUserStory(backlog, userStoryId);
 
-            if(tempUserStory != null)
+        iUserStoryRepository.delete(userStoryId);
+    }
+
+    @Override
+    public UserStory validateUserStory(Backlog backlog, Long userStoryId)
+    {
+        UserStory tempUserStory = iUserStoryRepository.findOne(userStoryId);
+
+        if(tempUserStory != null)
+        {
+            if(tempUserStory.getBacklog().getId().equals(backlog.getId()))
             {
-                if(tempUserStory.getBacklog().getId().equals(backlog.getId()))
-                {
-                    iUserStoryRepository.delete(userStoryId);
-                }
-                else
-                {
-                    throw new UserStoryInvalidBacklogException(userStoryId, backlog.getId());
-                }
+                return tempUserStory;
             }
             else
             {
-                throw new UserStoryNotFoundException(userStoryId);
+                throw new UserStoryInvalidBacklogException(userStoryId, backlog.getId());
             }
         }
-        catch (UserStoryInvalidBacklogException | UserStoryNotFoundException e)
+        else
         {
-            GlobalControllerAdvice.LOGGER.log(Level.SEVERE, e.getMessage(), e);
-
-            throw e;
+            throw new UserStoryNotFoundException(userStoryId);
         }
     }
 }

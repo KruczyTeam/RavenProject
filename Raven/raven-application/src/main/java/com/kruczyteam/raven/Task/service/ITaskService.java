@@ -12,4 +12,6 @@ public interface ITaskService
     Task getTask(UserStory userStory, Long taskId);
     void updateTask(UserStory userStory, Long taskId, Task task);
     void deleteTask(UserStory userStory, Long taskId);
+
+    Task validateTask(UserStory userStory, Long taskId);
 }

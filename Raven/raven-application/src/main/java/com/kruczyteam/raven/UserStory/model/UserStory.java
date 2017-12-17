@@ -5,6 +5,7 @@ import com.kruczyteam.raven.Backlog.model.Backlog;
 import com.kruczyteam.raven.ProgressState;
 import com.kruczyteam.raven.Task.model.Task;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 import java.util.List;
@@ -30,7 +31,7 @@ public class UserStory
     private Backlog backlog;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "userStory", orphanRemoval = true)
+    @OneToMany(mappedBy = "userStory", orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Task> tasks;
 
     public UserStory()

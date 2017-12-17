@@ -1,11 +1,13 @@
 package com.kruczyteam.raven.Task.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.kruczyteam.raven.ProgressState;
 import com.kruczyteam.raven.UserStory.model.UserStory;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 
@@ -26,9 +28,9 @@ public class Task
     @Column(name = "author")
     private String author;
 
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @JsonFormat(pattern = "dd::MM::yyyy")
     @Column(name = "creation_date")
-    private LocalDateTime creationDate;
+    private LocalDate creationDate;
 
     @Column(name = "owner")
     private String owner;
@@ -70,12 +72,12 @@ public class Task
         this.author = author;
     }
 
-    public LocalDateTime getCreationDate()
+    public LocalDate getCreationDate()
     {
         return creationDate;
     }
 
-    public void setCreationDate(LocalDateTime creationDate)
+    public void setCreationDate(LocalDate creationDate)
     {
         this.creationDate = creationDate;
     }

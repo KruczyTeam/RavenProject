@@ -11,8 +11,6 @@ import java.util.logging.Logger;
 @ControllerAdvice
 public class GlobalControllerAdvice
 {
-    public static final Logger LOGGER = Logger.getAnonymousLogger();
-
     @ExceptionHandler(BacklogNotFoundException.class)
     public Exception notFoundException(final BacklogNotFoundException e)
     {
