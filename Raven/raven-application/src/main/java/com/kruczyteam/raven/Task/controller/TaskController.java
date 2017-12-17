@@ -2,6 +2,7 @@ package com.kruczyteam.raven.Task.controller;
 
 import com.kruczyteam.raven.Backlog.model.Backlog;
 import com.kruczyteam.raven.Backlog.service.BacklogService;
+import com.kruczyteam.raven.ProgressState;
 import com.kruczyteam.raven.Task.model.Task;
 import com.kruczyteam.raven.Task.service.TaskService;
 import com.kruczyteam.raven.UserStory.model.UserStory;
@@ -71,5 +72,14 @@ public class TaskController
 		UserStory userStory = userStoryService.getUserStory(backlog, userStoryId);
 
 		taskService.deleteTask(userStory, taskId);
+	}
+
+	@PatchMapping(value = "/{taskId}")
+	public void setProgressState(@PathVariable Long backlogId, @PathVariable Long userStoryId, @PathVariable Long taskId, @Valid @RequestParam ProgressState progressState)
+	{
+		Backlog backlog = backlogService.getBacklog(backlogId);
+		UserStory userStory = userStoryService.getUserStory(backlog, userStoryId);
+
+		taskService.setTaskProgressState(userStory, taskId, progressState);
 	}
 }

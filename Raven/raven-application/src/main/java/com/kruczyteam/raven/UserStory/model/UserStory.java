@@ -5,6 +5,7 @@ import com.kruczyteam.raven.Backlog.model.Backlog;
 import com.kruczyteam.raven.ProgressState;
 import com.kruczyteam.raven.Task.model.Task;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 import java.util.List;
@@ -30,7 +31,7 @@ public class UserStory
     private Backlog backlog;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "userStory", orphanRemoval = true)
+    @OneToMany(mappedBy = "userStory", cascade = CascadeType.REMOVE)
     private List<Task> tasks;
 
     public UserStory()
@@ -75,5 +76,15 @@ public class UserStory
     public void setBacklog(Backlog backlog)
     {
         this.backlog = backlog;
+    }
+
+    public List<Task> getTasks()
+    {
+        return tasks;
+    }
+
+    public void setTasks(List<Task> tasks)
+    {
+        this.tasks = tasks;
     }
 }

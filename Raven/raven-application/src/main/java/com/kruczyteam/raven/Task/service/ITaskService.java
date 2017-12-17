@@ -1,5 +1,6 @@
 package com.kruczyteam.raven.Task.service;
 
+import com.kruczyteam.raven.ProgressState;
 import com.kruczyteam.raven.Task.model.Task;
 import com.kruczyteam.raven.UserStory.model.UserStory;
 import org.springframework.security.access.annotation.Secured;
@@ -18,4 +19,8 @@ public interface ITaskService
     void updateTask(UserStory userStory, Long taskId, Task task);
     @Secured({"ROLE_Admin"})
     void deleteTask(UserStory userStory, Long taskId);
+    @Secured({"ROLE_Admin","ROLE_User"})
+    void setTaskProgressState(UserStory userStory, Long taskId, ProgressState progressState);
+
+    Task validateTask(UserStory userStory, Long taskId);
 }
