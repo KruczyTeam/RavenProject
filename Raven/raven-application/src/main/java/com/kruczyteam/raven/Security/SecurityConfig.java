@@ -25,7 +25,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
 	@Override
 	protected void configure(HttpSecurity http) throws Exception
 	{
-		http.csrf().disable().authorizeRequests().antMatchers(HttpMethod.POST, "/api/v1/user/create/").permitAll().antMatchers(HttpMethod.GET, "/api/v1/user/retrivepassword/").permitAll().anyRequest().authenticated().and().httpBasic().and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+		http.csrf().disable().authorizeRequests()
+				.antMatchers(HttpMethod.POST, "/api/v1/user/create/").permitAll()
+				.anyRequest().authenticated().and().httpBasic().and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 	}
 
 	@Bean
