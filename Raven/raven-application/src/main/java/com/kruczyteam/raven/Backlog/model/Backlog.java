@@ -1,5 +1,6 @@
 package com.kruczyteam.raven.Backlog.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.kruczyteam.raven.UserStory.model.UserStory;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -20,6 +21,7 @@ public class Backlog
     @Column(name = "name")
     private String name;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "backlog", orphanRemoval = true)
     private List<UserStory> userStories;
 
@@ -27,19 +29,33 @@ public class Backlog
     {
     }
 
-    public Long getId() {
+    public Long getId()
+    {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Long id)
+    {
         this.id = id;
     }
 
-    public String getName() {
+    public String getName()
+    {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(String name)
+    {
         this.name = name;
+    }
+
+    public List<UserStory> getUserStories()
+    {
+        return userStories;
+    }
+
+    public void setUserStories(List<UserStory> userStories)
+    {
+        this.userStories = userStories;
     }
 }

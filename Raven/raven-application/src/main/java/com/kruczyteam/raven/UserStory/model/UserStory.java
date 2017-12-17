@@ -31,7 +31,7 @@ public class UserStory
     private Backlog backlog;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "userStory", orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "userStory", orphanRemoval = true)
     private List<Task> tasks;
 
     public UserStory()
@@ -76,5 +76,15 @@ public class UserStory
     public void setBacklog(Backlog backlog)
     {
         this.backlog = backlog;
+    }
+
+    public List<Task> getTasks()
+    {
+        return tasks;
+    }
+
+    public void setTasks(List<Task> tasks)
+    {
+        this.tasks = tasks;
     }
 }
