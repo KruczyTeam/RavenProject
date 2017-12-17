@@ -31,7 +31,7 @@ public class UserStory
     private Backlog backlog;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "userStory", orphanRemoval = true)
+    @OneToMany(mappedBy = "userStory", cascade = CascadeType.REMOVE)
     private List<Task> tasks;
 
     public UserStory()

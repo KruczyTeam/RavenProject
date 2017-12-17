@@ -22,7 +22,7 @@ public class Backlog
     private String name;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "backlog", orphanRemoval = true)
+    @OneToMany(mappedBy = "backlog", cascade = CascadeType.REMOVE)
     private List<UserStory> userStories;
 
     public Backlog()
