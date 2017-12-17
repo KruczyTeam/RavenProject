@@ -1,5 +1,6 @@
 package com.kruczyteam.raven.Task.service;
 
+import com.kruczyteam.raven.Backlog.model.Backlog;
 import com.kruczyteam.raven.ProgressState;
 import com.kruczyteam.raven.Task.exception.TaskInvalidUserStoryException;
 import com.kruczyteam.raven.Task.exception.TaskNotFoundException;
@@ -65,6 +66,15 @@ public class TaskService implements ITaskService
         validateTask(userStory, taskId);
 
         iTaskRepository.delete(taskId);
+    }
+
+    @Override
+    public void setTaskProgressState(UserStory userStory, Long taskId, ProgressState progressState)
+    {
+        Task tempTask = validateTask(userStory, taskId);
+
+        tempTask.setProgressState(progressState);
+        iTaskRepository.save(tempTask);
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.kruczyteam.raven.UserStory.controller;
 
 import com.kruczyteam.raven.Backlog.model.Backlog;
 import com.kruczyteam.raven.Backlog.service.BacklogService;
+import com.kruczyteam.raven.ProgressState;
 import com.kruczyteam.raven.UserStory.model.UserStory;
 import com.kruczyteam.raven.UserStory.exception.UserStoryNotFoundException;
 import com.kruczyteam.raven.UserStory.service.UserStoryService;
@@ -63,5 +64,13 @@ public class UserStoryController
         Backlog backlog = backlogService.getBacklog(backlogId);
 
         userStoryService.deleteUserStory(backlog, userStoryId);
+    }
+
+    @PatchMapping(value = "/{userStoryId}")
+    public void setProgressState(@PathVariable Long backlogId, @PathVariable Long userStoryId, @Valid @RequestParam ProgressState progressState)
+    {
+        Backlog backlog = backlogService.getBacklog(backlogId);
+
+        userStoryService.setUserStoryProgressState(backlog, userStoryId, progressState);
     }
 }

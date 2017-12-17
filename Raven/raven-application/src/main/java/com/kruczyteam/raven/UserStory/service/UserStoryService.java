@@ -64,6 +64,15 @@ public class UserStoryService implements IUserStoryService
     }
 
     @Override
+    public void setUserStoryProgressState(Backlog backlog, Long userStoryId, ProgressState progressState)
+    {
+        UserStory tempUserStory = validateUserStory(backlog, userStoryId);
+
+        tempUserStory.setProgressState(progressState);
+        iUserStoryRepository.save(tempUserStory);
+    }
+
+    @Override
     public UserStory validateUserStory(Backlog backlog, Long userStoryId)
     {
         UserStory tempUserStory = iUserStoryRepository.findOne(userStoryId);
