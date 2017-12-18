@@ -1,5 +1,8 @@
 package com.kruczyteam.raven.User.service;
 
+import com.kruczyteam.raven.History.Enums.Operation;
+import com.kruczyteam.raven.History.Enums.Services;
+import com.kruczyteam.raven.History.service.IHistoryService;
 import com.kruczyteam.raven.User.exception.UserExistException;
 import com.kruczyteam.raven.User.exception.UserNotFoundException;
 import com.kruczyteam.raven.User.model.UserInformation;
@@ -20,24 +23,26 @@ import java.util.Arrays;
 public class UserService implements UserDetailsService, IUserService
 {
 	private IUserRepository userRepository;
+	private IHistoryService historyService;
 	private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
 	@Autowired
-	public UserService(IUserRepository userRepository)
+	public UserService(IUserRepository userRepository, IHistoryService historyService)
 	{
 		this.userRepository = userRepository;
+		this.historyService = historyService;
 	}
 
 	public void createUser(UserInformation userInformation) throws UserExistException
 	{
 		UserInformation user = userRepository.findByLogin(userInformation.getLogin());
-		if(user==null)
+		if (user == null)
 		{
 			userInformation.setPassword(encoder.encode(userInformation.getPassword()));
 			userInformation.setRole("ROLE_User");
-			userRepository.save(userInformation);
-		}
-		else
+			user = userRepository.save(userInformation);
+			historyService.AddToHistory(Services.User, Operation.Add, user.getId().toString());
+		} else
 		{
 			throw new UserExistException();
 		}

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface IUserStoryRepository extends CrudRepository<UserStory,Long>
+public interface IUserStoryRepository extends CrudRepository<UserStory, Long>
 {
-    List<UserStory> findByBacklog(Backlog backlog);
+	List<UserStory> findByBacklog(Backlog backlog);
 }

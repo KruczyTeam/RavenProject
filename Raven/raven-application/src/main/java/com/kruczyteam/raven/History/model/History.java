@@ -24,6 +24,18 @@ public class History
 	@Column(name = "data")
 	private String data;
 
+	public History()
+	{
+
+	}
+
+	public History(String service, String operation, String data)
+	{
+		this.service = service;
+		this.operation = operation;
+		this.data = data;
+	}
+
 	public Long getId()
 	{
 		return id;
@@ -54,21 +66,8 @@ public class History
 		this.operation = operation;
 	}
 
-	public History()
-	{
-
-	}
-
-	public History(String service, String operation, String data)
-	{
-		this.service = service;
-		this.operation = operation;
-		this.data = data;
-	}
-
 	public String getData()
 	{
-
 		return data;
 	}
 

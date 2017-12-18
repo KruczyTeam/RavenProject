@@ -5,7 +5,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface IBacklogRepository extends CrudRepository<Backlog,Long>
+public interface IBacklogRepository extends CrudRepository<Backlog, Long>
 {
 
 }

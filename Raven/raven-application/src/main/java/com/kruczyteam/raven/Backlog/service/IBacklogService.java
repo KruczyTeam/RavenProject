@@ -7,16 +7,20 @@ import java.util.List;
 
 public interface IBacklogService
 {
-	@Secured({"ROLE_Admin","ROLE_User"})
-    List<Backlog> getBacklogs();
-	@Secured({"ROLE_Admin","ROLE_User"})
-    void addBacklog(Backlog backlog);
-	@Secured({"ROLE_Admin","ROLE_User"})
-    Backlog getBacklog(Long backlogId);
-	@Secured({"ROLE_Admin","ROLE_User"})
-    void updateBacklog(Long backlogId, Backlog backlog);
-	@Secured({"ROLE_Admin"})
-    void deleteBacklog(Long backlogId);
+	@Secured({"ROLE_Admin", "ROLE_User"})
+	List<Backlog> getBacklogs();
 
-    Backlog validateBacklog(Long backlogId);
+	@Secured({"ROLE_Admin", "ROLE_User"})
+	void addBacklog(Backlog backlog);
+
+	@Secured({"ROLE_Admin", "ROLE_User"})
+	Backlog getBacklog(Long backlogId);
+
+	@Secured({"ROLE_Admin", "ROLE_User"})
+	void updateBacklog(Long backlogId, Backlog backlog);
+
+	@Secured({"ROLE_Admin"})
+	void deleteBacklog(Long backlogId);
+
+	Backlog validateBacklog(Long backlogId);
 }
