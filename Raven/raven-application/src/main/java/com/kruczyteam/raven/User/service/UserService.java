@@ -22,16 +22,11 @@ import java.util.Arrays;
 @Service
 public class UserService implements UserDetailsService, IUserService
 {
+	@Autowired
 	private IUserRepository userRepository;
+	@Autowired
 	private IHistoryService historyService;
 	private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-
-	@Autowired
-	public UserService(IUserRepository userRepository, IHistoryService historyService)
-	{
-		this.userRepository = userRepository;
-		this.historyService = historyService;
-	}
 
 	public void createUser(UserInformation userInformation) throws UserExistException
 	{
