@@ -28,7 +28,7 @@ public class UserService implements UserDetailsService, IUserService
 	private IHistoryService historyService;
 	private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
-	public void createUser(UserInformation userInformation) throws UserExistException
+	public void createUser(UserInformation userInformation)
 	{
 		UserInformation user = userRepository.findByLogin(userInformation.getLogin());
 		if (user == null)

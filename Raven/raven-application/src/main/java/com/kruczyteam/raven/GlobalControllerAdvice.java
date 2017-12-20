@@ -4,8 +4,10 @@ import com.kruczyteam.raven.Backlog.exception.BacklogNotFoundException;
 import com.kruczyteam.raven.Task.exception.TaskNotFoundException;
 import com.kruczyteam.raven.User.exception.UserExistException;
 import com.kruczyteam.raven.UserStory.exception.UserStoryNotFoundException;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ControllerAdvice
 public class GlobalControllerAdvice
@@ -35,8 +37,8 @@ public class GlobalControllerAdvice
 	}
 
 	@ExceptionHandler(UserExistException.class)
-	public Exception userExistException(final UserExistException e)
+	@ResponseStatus(HttpStatus.CONFLICT)
+	public void userExistException()
 	{
-		return e;
 	}
 }
